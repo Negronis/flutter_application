@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:my_application/global/global.dart';
 import 'package:my_application/my_provider/provider_data.dart';
+import 'package:my_application/routes/routes.dart';
+import 'package:my_application/util/dialog.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -19,15 +21,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<ProviderData>(create: (_) => ProviderData()),
       ],
       child: MaterialApp(
-        home: Scaffold(body: Center(
-          child: Builder(
-            builder: (BuildContext context) {
-              return Center(
-                child: Text(Provider.of<ProviderData>(context).version),
-              );
-            },
-          ),
-        )),
+        routes: Routes(context: context).routes,
+        initialRoute: '/',
       ),
     );
   }
