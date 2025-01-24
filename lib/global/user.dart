@@ -4,15 +4,15 @@ part 'user.g.dart';
 
 @JsonSerializable()
 class User {
-  final String userName;
-  final String passWord;
-  final String token;
+  final String? userName;
+  final String? passWord;
+  final String? token;
   final String? avatar;
 
   User({
-    required this.userName,
-    required this.passWord,
-    required this.token,
+    this.userName,
+    this.passWord,
+    this.token,
     this.avatar,
   });
 
