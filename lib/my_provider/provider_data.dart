@@ -9,7 +9,7 @@ class ProviderData extends ChangeNotifier {
   //获取登录状态
   bool get isLogin => user.isLogin;
   //获取版本号
-  String get version => profile.version ?? '';
+  String get version => profile.version ?? '1.0.0';
   //修改用户表
   set user(User value) {
     if (value.userName != user.userName) {
