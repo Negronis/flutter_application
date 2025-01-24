@@ -12,10 +12,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     var dialog = MyDialog(context: context);
-    initState() {
-      super.initState();
-      dialog.showLoading();
-    }
 
     return Scaffold(
       body: Center(
