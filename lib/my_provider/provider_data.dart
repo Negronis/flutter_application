@@ -4,16 +4,23 @@ import 'package:my_application/global/profile.dart';
 import 'package:my_application/global/user.dart';
 
 class ProviderData extends ChangeNotifier {
-  User get user => User();
-  Profile get profile => Profile();
+  User get user => Global.user;
+  Profile get profile => Global.profile;
   //获取登录状态
   bool get isLogin => user.isLogin;
   //获取版本号
   String get version => profile.version ?? '1.0.0';
+  //退出登录
+  void logout() {
+    print(123);
+    Global.clearUser();
+    notifyListeners();
+  }
+
   //修改用户表
   set user(User value) {
     if (value.userName != user.userName) {
-      user = value;
+      Global.user = value;
       Global.saveUser();
       notifyListeners();
     }

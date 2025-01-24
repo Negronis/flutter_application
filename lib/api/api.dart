@@ -6,10 +6,8 @@ class Api {
   // 登录接口
   Future login(String username, String password) async {
     var dio = Dio();
-    final formData = FormData.fromMap({
-      "username": username,
-      "password": password,
-    });
+    final formData = FormData.fromMap(
+        {"account": username, "password": password, "openid": ""});
     var response = await dio.post("${baseUrl}api/user/login", data: formData);
     return response.data;
   }

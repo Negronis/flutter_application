@@ -17,6 +17,7 @@ class Global {
     WidgetsFlutterBinding.ensureInitialized();
     _prefs = await SharedPreferences.getInstance();
     var user_ = _prefs.getString('user');
+    print(user_);
     var profile_ = _prefs.getString('profile');
     try {
       if (user_ != null) {
@@ -30,8 +31,19 @@ class Global {
     }
   }
 
+  //清除user并初始化User类更新数据
+  static clearUser() {
+    print("123123");
+    _prefs.remove('user');
+    user = User();
+  }
+
   //更新缓存 - 用户数据
-  static saveUser() => _prefs.setString('user', jsonEncode(user));
+  static saveUser() {
+    _prefs.setString('user', jsonEncode(user));
+    print(_prefs.getString('user'));
+  }
+
   // 更新缓存 - 版本号等
   static saveProfile() => _prefs.setString('profile', jsonEncode(profile));
 }
