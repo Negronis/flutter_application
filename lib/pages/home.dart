@@ -22,6 +22,20 @@ class _HomePageState extends State<HomePage> {
       bytes = base64Decode(base.split(',')[1]);
     }
     return Scaffold(
+      appBar: AppBar(
+        title: Center(
+          child: Text('首页'),
+        ),
+      ),
+      drawer: Drawer(
+        child: ListView(
+          children: [
+            DrawerHeader(
+              child: Text('用户信息'),
+            ),
+          ],
+        ),
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

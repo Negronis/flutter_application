@@ -12,7 +12,6 @@ class ProviderData extends ChangeNotifier {
   String get version => profile.version ?? '1.0.0';
   //退出登录
   void logout() {
-    print(123);
     Global.clearUser();
     notifyListeners();
   }
