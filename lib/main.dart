@@ -19,16 +19,17 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     var activeRoutes = Activeroutes(context: context);
     return MultiProvider(
-        providers: [
-          ChangeNotifierProvider<ProviderData>(create: (_) => ProviderData()),
-        ],
-        builder: (context2, _) => MaterialApp(
-              initialRoute: '/',
-              onGenerateRoute: (RouteSettings settings) =>
-                  activeRoutes.initActiveRoutes(
-                      settings,
-                      Provider.of<ProviderData>(context2, listen: false)
-                          .isLogin),
-            ));
+      providers: [
+        ChangeNotifierProvider<ProviderData>(create: (_) => ProviderData()),
+      ],
+      builder: (context2, _) => MaterialApp(
+        initialRoute: '/',
+        onGenerateRoute: (RouteSettings settings) =>
+            activeRoutes.initActiveRoutes(
+          settings,
+          Provider.of<ProviderData>(context2, listen: false).isLogin,
+        ),
+      ),
+    );
   }
 }

@@ -43,12 +43,12 @@ class _HomePageState extends State<HomePage> {
           Container(
               height: 200,
               //加载背景图崩溃，原因未知
-              // decoration: BoxDecoration(
-              //   image: DecorationImage(
-              //     image: AssetImage('images/1.jpg'),
-              //     fit: BoxFit.cover,
-              //   ),
-              // ),
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('images/1.jpg'),
+                  fit: BoxFit.cover,
+                ),
+              ),
               child: Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
