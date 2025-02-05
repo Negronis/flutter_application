@@ -1,11 +1,11 @@
 import 'dart:async';
 
-// import 'package:dio/dio.dart';
+import 'package:dio/dio.dart';
 
 /// 接口放这里
 class Api {
   static const String baseUrl = "https://ccc.hebzhhd.com/";
-
+  static const String dataBaseUrl = 'https://zyyqzj.hebzhhd.com';
   //模拟登录
   Future mockLogin() async {
     return await Future.delayed(Duration(seconds: 2), () {
@@ -33,5 +33,13 @@ class Api {
     // var response = await dio.post("${baseUrl}api/user/login", data: formData);
     // return response.data;
     return await mockLogin();
+  }
+
+  //数据接口
+  Future getList() async {
+    var dio = Dio();
+    var res =
+        await dio.post("$dataBaseUrl/api/zydj/Zcydaijian/getPrescription");
+    return res.data;
   }
 }

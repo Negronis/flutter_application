@@ -1,10 +1,8 @@
-import 'dart:convert';
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:my_application/my_provider/provider_data.dart';
-import 'package:provider/provider.dart';
+import 'package:my_application/pages/bottom_page/data_page.dart';
+import 'package:my_application/pages/bottom_page/home_page.dart';
+import 'package:my_application/pages/bottom_page/user_page.dart';
+import 'package:my_application/pages/home_components/drawer.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -14,103 +12,57 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  //配置底部导航栏
+  int bottomNavIndex = 0;
+  List<Map> bottom = [
+    {
+      'label': "首页",
+      'icon': Icon(Icons.home),
+    },
+    {
+      "label": "数据",
+      "icon": Icon(Icons.data_saver_off),
+    },
+    {
+      "label": "我的",
+      "icon": Icon(Icons.person),
+    }
+  ];
+  // 配置页面
+  List<Widget> pages = [HomeContentPage(), DataPage(), UserPage()];
   @override
   Widget build(BuildContext context) {
-    //配置Drawer
-    List<Map> list = [
-      {
-        'text': "设置",
-        'icon': Icon(Icons.settings),
-        'tap': () {
-          Navigator.pushNamed(context, '/setting');
-        }
-      }
-    ];
-    var base = Provider.of<ProviderData>(context).user.avatar ?? '';
-    Uint8List bytes = base64Decode('');
-    if (base != '') {
-      bytes = base64Decode(base.split(',')[1]);
-    }
     return Scaffold(
+      // resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Center(
-          child: Text('首页'),
+          child: Text(bottom[bottomNavIndex]['label'].toString()),
         ),
-      ),
-      drawer: Drawer(
-          child: Column(
-        children: [
-          Container(
-              height: 200,
-              //加载背景图崩溃，原因未知
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('images/1.jpg'),
-                  fit: BoxFit.cover,
-                ),
-              ),
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.all(Radius.circular(100)),
-                      child: SvgPicture.memory(
-                        bytes,
-                        width: 80,
-                        height: 80,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    Text.rich(
-                      TextSpan(
-                        children: [
-                          TextSpan(
-                            text: Provider.of<ProviderData>(context)
-                                    .user
-                                    .userName ??
-                                '暂无',
-                          ),
-                          TextSpan(text: '，欢迎'),
-                        ],
-                      ),
-                      style: TextStyle(fontSize: 15, color: Colors.white),
-                    )
-                  ],
-                ),
-              )),
-          Expanded(
-            child: ListView.builder(
-              itemCount: list.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  leading: list[index]['icon'],
-                  title: Text(list[index]['text']),
-                  onTap: list[index]['tap'],
-                );
-              },
+        actions: [
+          Opacity(
+            opacity: 0,
+            child: IconButton(
+              icon: Icon(Icons.abc),
+              onPressed: () {},
             ),
           ),
         ],
-      )),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(Provider.of<ProviderData>(context).user.userName ?? '暂无'),
-            Text(Provider.of<ProviderData>(context).user.passWord ?? '暂无'),
-            Text(Provider.of<ProviderData>(context).user.token ?? '暂无'),
-            ElevatedButton(
-              onPressed: () {
-                Provider.of<ProviderData>(context, listen: false).logout();
-                Navigator.pushNamedAndRemoveUntil(
-                    context, '/login', (router) => false);
-              },
-              child: Text("退出登录"),
-            ),
-          ],
-        ),
       ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: bottomNavIndex,
+        items: bottom.map(
+          (e) {
+            return BottomNavigationBarItem(icon: e['icon'], label: e['label']);
+          },
+        ).toList(),
+        onTap: (value) {
+          setState(() {
+            bottomNavIndex = value;
+          });
+        },
+      ),
+      drawer: DrawerCom(),
+      body: pages[bottomNavIndex],
     );
   }
 }
